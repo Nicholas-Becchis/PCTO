@@ -12,8 +12,7 @@ Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/agenteP.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/enemy.png)
 
-
-
+L'esercizio che abbiamo scelto per il nostro gioco è "limiti di stabilità" e eventualmente anche qualche comando vocale
 
 Stiamo realizzando la mappa e il suo scorrimento.
 
