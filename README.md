@@ -1,5 +1,6 @@
                                                 Garbage Boy
 Il nostro videogioco cosiste in un platform a scorrimento realizzato in 8 bit, tramite Python con la libreria Pygame e Opencv.
+La nostra webcam riconosce il colore rosso e spostando il nostro oggeto permette al personaggio di spostersi sul terreno.
 
 Per dare un impronta di sensibilizzazione ambientale al gioco abbiamo pensato di tematizzarlo in questo modo:
 
