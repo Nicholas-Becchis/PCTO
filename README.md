@@ -17,6 +17,6 @@ Romagnoli Raffaello - First developer
 
 Antonelli Matteo - Developer and producer
 
-Ringraziamo IIT(Istituto Itagliano di tecnologia), l' Associazione Italiana Sclerosi Multipla, l'Università di Genova e Wondertech
+Ringraziamo IIT(Istituto Italiano di tecnologia), l' Associazione Italiana Sclerosi Multipla, l'Università di Genova e Wondertech
 
 
