@@ -8,3 +8,12 @@ Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale
 
 
 Stiamo realizzando la mappa e il suo scorrimento.
+
+Becchis Nicholas - Team leader - Graphic designer
+Bruno Paolo - Level designer and developer
+Romagnoli Raffaello - First developer
+Antonelli Matteo - Developer and producer
+
+Ringraziamo IIT(Istituto Itagliano di tecnologia), l' Associazione Italiana Sclerosi Multipla, l'Università di Genova e Wondertech
+
+
