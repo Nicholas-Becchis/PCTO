@@ -1,5 +1,5 @@
                                                 Garbage Boy
-Il nostro videogioco cosiste in un platform a scorrimento realizzato in 8 bit, tramite Pygame e Opencv.
+Il nostro videogioco cosiste in un platform a scorrimento realizzato in 8 bit, tramite Python con la libreria Pygame e Opencv.
 
 Per dare un impronta di sensibilizzazione ambientale al gioco abbiamo pensato di tematizzarlo in questo modo:
 
