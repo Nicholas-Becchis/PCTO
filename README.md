@@ -8,7 +8,8 @@ Il protagonista, Garbage boy, deve avanzare e superare gli ostacoli, raccogliend
 Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale(un imprenditore con scarsa attenzione verso l'ambiente).
 
 ![image](https://user-images.githubusercontent.com/71812597/110108915-0ca6bc00-7dad-11eb-9b63-99135e7c8907.png)
-![image](https://user-images.githubusercontent.com/71812597/110111925-5abdbe80-7db1-11eb-9fe0-b2f3e905474e.png)
+![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/artur_run.png)
+
 
 
 
