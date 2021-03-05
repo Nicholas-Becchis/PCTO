@@ -4,6 +4,7 @@ Per dare un impronta di sensibilizzazione ambientale al gioco abbiamo pensato di
 Il protagonista, Garbage boy, deve avanzare e superare gli ostacoli, raccogliendo la spazzatura lungo il percorso.
 Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale(un imprenditore con scarsa attenzione verso l'ambiente).
 
+![image](https://user-images.githubusercontent.com/71812597/110108915-0ca6bc00-7dad-11eb-9b63-99135e7c8907.png)
 
 
 Stiamo realizzando la mappa e i suo scorrimento.
