@@ -10,8 +10,10 @@ Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/Title.png)
 ![image](https://user-images.githubusercontent.com/71812597/110108915-0ca6bc00-7dad-11eb-9b63-99135e7c8907.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/artur_run.png)
+![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/smog.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/agenteP.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/enemy.png)
+![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/spiderman.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/play_again.png)
 
 L'esercizio che abbiamo scelto per il nostro gioco è "limiti di stabilità" e eventualmente anche qualche comando vocale
