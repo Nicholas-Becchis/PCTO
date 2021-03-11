@@ -9,7 +9,7 @@ Il protagonista, Garbage boy, deve avanzare e superare gli ostacoli, raccogliend
 Il gioco consisterà in alcuni livelli, simulando l'inseguimento del boss finale(un imprenditore con scarsa attenzione verso l'ambiente).
 
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/Title.png)
-![image](https://user-images.githubusercontent.com/71812597/110108915-0ca6bc00-7dad-11eb-9b63-99135e7c8907.png)
+![image](https://user-images.githubusercontent.com/71867663/110781921-c3e87a80-8266-11eb-929c-add21e8d61ff.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/artur_run.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/smog.png)
 ![image](https://github.com/Nicholas-Becchis/PCTO/blob/main/images/agenteP.png)
