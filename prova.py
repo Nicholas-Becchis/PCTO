@@ -8,14 +8,42 @@ pygame.init()
 screen=pygame.display.set_mode((1150,640),0,255)
 pygame.display.set_caption("")
 clock=pygame.time.Clock()
-#Creo 2 tipi di "sprites", le piattaforme e l'omino, per gestire le collisioni
-global man, bottle
+
 man=pygame.image.load("images\man.png")
-bottle=pygame.image.load("images\cigarette.png")
+manFlip=pygame.image.load("images\manFlip.png")
+cig=pygame.image.load("images\cigarette.png")
 box=pygame.image.load("images\Box.png")
+bottle=pygame.image.load("images\Bottle.png")
+juice=pygame.image.load("images\juice.png")
+cloud=pygame.image.load("images\cloud.png")
+cloud2=pygame.image.load("images\cloud2.png")
+bench=pygame.image.load("images\Bench.png")
+enemy=pygame.image.load("images\enemy2.png")
+over=pygame.image.load("images\over.png")
+font=pygame.font.SysFont("minecraft", 25)
+fnt=pygame.font.SysFont("minecraft", 100)
+BLACK = (0,0,0)
+cont=0
+
 #import pdb; pdb.set_trace()
-todraw=pygame.sprite.Group()
+todraw=pygame.sprite.Group()    #instanzio un oggetto di tipo Group
 plats=pygame.sprite.Group()
+rub=pygame.sprite.Group()  
+ground=pygame.sprite.Group()
+cigar=pygame.sprite.Group()
+nemic=pygame.sprite.Group()
+
+#punteggio
+def message(cont):
+    contStr=str(cont)
+    surf_text = font.render(contStr, True, BLACK)
+    screen.blit(surf_text, (20, 53))
+
+#messaggio nemico
+def text():
+    surf_text = fnt.render("Game Over", True, BLACK)
+    screen.blit(surf_text, (450, 320))
+
 
 #Classe per la creazione delle piattaforme
 class Platform(pygame.sprite.Sprite):
@@ -38,9 +66,6 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, img):     
         pygame.sprite.Sprite.__init__(self)
         self.image=img
-        #self.screen.blit(man, (x * larghezzaQ, y * altezzaQ))
-        #self.image=pygame.Surface((10,10))
-        #self.image.fill((0,255,0))
         self.rect=self.image.get_rect()
         self.rect.x=100
         self.rect.y=20
@@ -52,40 +77,104 @@ class Player(pygame.sprite.Sprite):
         ycoll()
         screen.blit(self.image, (self.rect.x, self.rect.y))
         
+#Classe giocatore
+class PlayerFlip(Player):
+    onground=False
+    def __init__(self, img):    
+        pygame.sprite.Sprite.__init__(self)    
+        todraw.add(self)
+    def update(self):
+        self.rect.x+=self.move_x
+        xcoll()
+        self.rect.y+=self.move_y
+        ycoll()
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+    
+class Spara(pygame.sprite.Sprite):
+    move_x=0
+    move_y=0
+    onground=False
+    def __init__(self, img):     
+        pygame.sprite.Sprite.__init__(self)
+        self.image=img
+        self.rect=self.image.get_rect()
+        self.rect.x=100
+        self.rect.y=550
+        cigar.add(self)
+    def update(self):
+        self.rect.x=self.rect.x+1
+        xcollcig()
+        self.rect.y+=self.move_y
+        #ycoll()
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
 #Classe spazzatura
 class Rubbish(pygame.sprite.Sprite):
     onground=False
-    def __init__(self,img,Platform):
+    def __init__(self,img,x,y):
         pygame.sprite.Sprite.__init__(self)
         self.image=img
-        #self.image=pygame.Surface((20,20))
-        #self.image.fill((65,45,0))
         self.rect=self.image.get_rect()
-        self.rect.x=random.randint(20,1100)
-        self.rect.y=random.randint(20,620)
-        if((self.rect.x,self.rect.y)!=p){
+        self.rect.x=x 
+        self.rect.y=y 
+        rub.add(self)
+    def update(self):
+        xcollRubbish()
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 
-        }
+#classe game over
+class GameOver(pygame.sprite.Sprite):
+    onground=False
+    def __init__(self,img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image=img
+        self.rect=self.image.get_rect()
+        self.rect.x=0
+        self.rect.y=0
         plats.add(self)
     def update(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
+ #Classe nemico
+class Nemico(pygame.sprite.Sprite):
+    onground=False
+    def __init__(self,img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image=img
+        self.rect=self.image.get_rect()
+        self.rect.x=0
+        self.rect.y=520
+        nemic.add(self)
+    def update(self):
+        xcollenemy()
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+#creazione della classe per le immagini di sfondo
+class background(pygame.sprite.Sprite):
+    onground=False
+    def __init__(self,img,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image=img
+        self.rect=self.image.get_rect()
+        self.rect.x=x 
+        self.rect.y=y 
+        ground.add(self)
+    def update(self):
+        xcollGround()
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+        
 #Classe contpunteggio
 class Box(pygame.sprite.Sprite):
     onground=False
     def __init__(self,img):
         pygame.sprite.Sprite.__init__(self)
         self.image=img
-        #self.image=pygame.Surface((20,20))
-        #self.image.fill((65,45,0))
         self.rect=self.image.get_rect()
         self.rect.x=0
         self.rect.y=20
         plats.add(self)
     def update(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
-
-
 
 #collisioni
 def xcoll():
@@ -95,6 +184,7 @@ def xcoll():
             player.rect.right=block.rect.left
         if player.move_x<0:
             player.rect.left=block.rect.right
+
 def ycoll():
         collision=pygame.sprite.spritecollide(player, plats, False)
         player.onground=False
@@ -109,56 +199,129 @@ def ycoll():
                 player.rect.bottom=block.rect.top
                 player.onground=True
 
-#inizializzo un giocatore
-#player = Player()
-#player = pygame.image.load("images\Bottle.png")
+#collisioni con il nemico
+def xcollenemy():
+    collision=pygame.sprite.spritecollide(player, nemic, False)  #cerco le plats che hanno una collisione col mio sprite
+    for block in collision:
+        if player.move_x>0 or player.move_x<0:
+           #nemic.remove(nemico)
+            text()
+            #todraw.remove(player)
+            #cigar.remove(spara)
+            #ground.remove(i)
+            #game=GameOver(over)
+
+
+#collisioni con le nuvole
+def xcollGround():
+    collision=pygame.sprite.spritecollide(player, ground, False)  #cerco le plats che hanno una collisione col mio sprite
+
+#collisioni con i mozziconi
+def xcollcig():
+    collision=pygame.sprite.spritecollide(player, cigar, False)  #cerco le spara che hanno una collisione col mio sprite
+    for block in collision:
+        if player.move_x>0 or player.move_x<0:
+            #global cont
+            #cont=cont+100
+            #screen.fill=BLACK
+            if cont<200:
+                todraw.remove(player)
+                text()
+                exit()
+
+#collisioni con il nemico
+def xcollRubbish():
+    collision=pygame.sprite.spritecollide(player, rub, False)  #cerco le rubbish che hanno una collisione col mio sprite
+    for block in collision:
+        if player.move_x>0 or player.move_x<0:
+            global cont
+            cont=cont+100
+            rub.remove(block)
 
 #Costruzione del gioco
 def build():
     myx=0
     myy=0
+    global level, i, o
     level=[
-            '                                                          ',
-            '                                                          ',
-            '                        #                                 ',
-            '                        #                                 ',
-            '                        #                                 ',
-            '                        #                                 ',
-            '                        #                                 ',
-            '############################################             #',
-            '      #                                                  #',
-            '      #                                                  #',
-            '      #                                                  #',
-            '      #                                                  #',
-            '      #                                                  #',
-            '###############################             ##############',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                             ###########################',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            ' #                                                        ',
-            '#############################################             ',
-            '                                                          ',
-            '                                                          ',
-            '                                                          ',
-            '                                                          ',
-            '                                                          ',
-            'yyyyyyyyyy################################################']
+            '                                                          #',
+            '                                                          #',
+            '                ù   ù   #                 h  ù            #',
+            '                        #                                 #',
+            '                        #                                 #',
+            '                        #                                 #',
+            '                        #                                 #',
+            '############################################              #',
+            '                                                          #',
+            '                                                          #',
+            '                                                          #',
+            '           h                                              #',
+            '                                                          #',
+            '###############################              ##############',
+            '                                                          #',
+            '                                                          #',
+            '                                                    ù     #',
+            '                                                          #',
+            '                                             h            #',
+            '                                ###########################',
+            '                                                          #',
+            '                                                          #',
+            '                                                          #',
+            '                                                          #',
+            '                                                          #',
+            '#############################################             #',
+            '                                                          #',
+            '                  +                                       #',
+            '                                                          #',
+            '                                                          #',
+            '                                                          #',
+            'yyyyyyyyyy#################################################']
+    contRubbish=0
+    contRubbish2=0
+    contRubbish3=0
+    """while contRubbish<4:
+        global x
+        x=random.randint(5, len(level)-1)
+        global y
+        y=random.randint(0, len(level[0])-1)
+        if level[x][y]==' ':
+            level[x]=level[x][:y] + 'b' + level[x][y+1:]
+            contRubbish=contRubbish+1"""
+
+    while contRubbish2<3:
+            x=random.randint(5, len(level)-1)
+            y=random.randint(0, len(level[0])-1)
+            if level[x][y]==' ':
+                level[x]=level[x][:y] + '+' + level[x][y+1:]
+                contRubbish2=contRubbish2+1
+
+    while contRubbish3<2:
+            x=random.randint(5, len(level)-1)
+            y=random.randint(0, len(level[0])-1)
+            if level[x][y]==' ':
+                level[x]=level[x][:y] + '*' + level[x][y+1:]
+                contRubbish3=contRubbish3+1
+
     for r in level:
         for c in r:
             if c==' ':
                 pass
-            elif c=='#'or'y':
+            elif c== 'h':
+                i=background(cloud,myx,myy)
+            elif c=='#'or c=='y':
                 p=Platform(myx,myy)
-            #elif c=='b':
-                #boxit=Box(myx,myy,box)
+            elif c=='b':
+                a=Rubbish(cig,myx,myy)
+            elif c== 'h':
+                i=background(cloud,myx,myy)
+            elif c== 'ù':
+                o=background(cloud2,myx,myy)
+            elif c== '+':
+                h=Rubbish(bottle,myx,myy)
+            elif c== '*':
+                j=Rubbish(juice,myx,myy)
             myx+=20
+            
         myy+=20
         myx=0
 
@@ -166,17 +329,18 @@ def build():
 def gravity():
     if not player.onground:
         player.move_y+=1
-player=Player(man)
-rubbish=Rubbish(bottle)
 contPunteggio=Box(box)
+player=Player(man)
+nemico=Nemico(enemy)
+#spara=Spara(cig)
 build()
-
-
 
 #Ciclo di gioco
 while True:
     screen.fill((0,204,255))
     gravity()
+    message(cont)
+    #text()
     #Ciclo eventi
     for event in pygame.event.get():
         if event.type==QUIT:  #Uscita
@@ -187,6 +351,8 @@ while True:
                     player.move_y=-15
                     player.onground=False
             if event.key==K_LEFT: #Sinistra
+                #player=PlayerFlip(manFlip)
+                #player.onground=False
                 player.move_x=-5
             if event.key==K_RIGHT:   #Destra
                 player.move_x=5
@@ -195,11 +361,22 @@ while True:
                 player.move_x=0
             if event.key==K_RIGHT:
                 player.move_x=0
+        if cont<200:
+            spara=Spara(cig)
+        elif cont==200:
+            todraw.remove(spara)
+            #spara.rect.x=spara.rect.x + 50  
+            #if spara.rect.x>1100:
+                #spara.rect.x=0     
 
     #Aggiorna tutte le sprites e lo schermo
     todraw.update()
     plats.update()
+    rub.update()
+    ground.update()
+    cigar.update()
+    nemic.update()
     pygame.display.update()
 
-    #Faccio in modo che il gioco non vada oltre i 30FPS
+    #Faccio in modo che il gioco non vada oltre i 40FPS
     clock.tick(40)
