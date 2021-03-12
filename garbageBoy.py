@@ -20,7 +20,8 @@ cloud = pygame.image.load("images\cloud.png")
 cloud2 = pygame.image.load("images\cloud2.png")
 #bench = pygame.image.load("images\Bench.png")
 enemy = pygame.image.load("images\enemy2.png")
-#over = pygame.image.load("images\over.png")
+over = pygame.image.load("images\over.png")
+win=pygame.image.load("images\win.png")
 font = pygame.font.SysFont("minecraft", 25)
 fnt = pygame.font.SysFont("minecraft", 100)
 title=pygame.image.load("Images\Title.png")
@@ -37,7 +38,8 @@ plats = pygame.sprite.Group()
 rub = pygame.sprite.Group()
 ground = pygame.sprite.Group()
 cigar = pygame.sprite.Group()
-nemic = pygame.sprite.Group()
+nemic=pygame.sprite.Group()
+game=pygame.sprite.Group()
 
 class MainMenu():
     def __init__(self):
@@ -96,7 +98,6 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         plats.add(self)
-
     def update(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
@@ -114,36 +115,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 100
         self.rect.y = 20
         todraw.add(self)
-
     def update(self):
         self.rect.x += self.move_x
         xcoll()
         self.rect.y += self.move_y
         ycoll()
         screen.blit(self.image, (self.rect.x, self.rect.y))
-
-
-# Classe giocatore
-class PlayerFlip(Player):
-    onground = False
-
-    def __init__(self, img):
-        pygame.sprite.Sprite.__init__(self)
-        todraw.add(self)
-
-    def update(self):
-        self.rect.x += self.move_x
-        xcoll()
-        self.rect.y += self.move_y
-        ycoll()
-        screen.blit(self.image, (self.rect.x, self.rect.y))
-
 
 class Spara(pygame.sprite.Sprite):
     move_x = 0
     move_y = 0
     onground = False
-
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -151,7 +133,6 @@ class Spara(pygame.sprite.Sprite):
         self.rect.x = 100
         self.rect.y = 550
         cigar.add(self)
-
     def update(self):
         self.rect.x = self.rect.x + 1
         xcollcig()
@@ -163,7 +144,6 @@ class Spara(pygame.sprite.Sprite):
 # Classe spazzatura
 class Rubbish(pygame.sprite.Sprite):
     onground = False
-
     def __init__(self, img, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -171,7 +151,6 @@ class Rubbish(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         rub.add(self)
-
     def update(self):
         xcollRubbish()
         screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -180,31 +159,27 @@ class Rubbish(pygame.sprite.Sprite):
 # classe game over
 class GameOver(pygame.sprite.Sprite):
     onground = False
-
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
-        plats.add(self)
-
+        game.add(self)
     def update(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
 
 # Classe nemico
 class Nemico(pygame.sprite.Sprite):
-    onground = False
-
-    def __init__(self, img):
+    onground=False
+    def __init__(self,img):
         pygame.sprite.Sprite.__init__(self)
-        self.image = img
-        self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 520
+        self.image=img
+        self.rect=self.image.get_rect()
+        self.rect.x=0
+        self.rect.y=520
         nemic.add(self)
-
     def update(self):
         xcollenemy()
         screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -213,7 +188,6 @@ class Nemico(pygame.sprite.Sprite):
 # creazione della classe per le immagini di sfondo
 class background(pygame.sprite.Sprite):
     onground = False
-
     def __init__(self, img, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -221,7 +195,6 @@ class background(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         ground.add(self)
-
     def update(self):
         xcollGround()
         screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -230,7 +203,6 @@ class background(pygame.sprite.Sprite):
 # Classe contpunteggio
 class Box(pygame.sprite.Sprite):
     onground = False
-
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -238,7 +210,6 @@ class Box(pygame.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = 20
         plats.add(self)
-
     def update(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
@@ -267,6 +238,13 @@ def ycoll():
             player.rect.bottom = block.rect.top
             player.onground = True
 
+def xcollRubbish():
+    collision=pygame.sprite.spritecollide(player, rub, False)  #cerco le rubbish che hanno una collisione col mio sprite
+    for block in collision:
+        if player.move_x>0 or player.move_x<0:
+            global cont
+            cont=cont+100
+            rub.remove(block)
 
 # collisioni con il nemico
 def xcollenemy():
@@ -275,11 +253,11 @@ def xcollenemy():
     for block in collision:
         if player.move_x > 0 or player.move_x < 0:
             # nemic.remove(nemico)
-            text()
+            #text()
             # todraw.remove(player)
             # cigar.remove(spara)
             # ground.remove(i)
-            # game=GameOver(over)
+            game=GameOver(win)
 
 
 # collisioni con le nuvole
@@ -290,28 +268,28 @@ def xcollGround():
 
 # collisioni con i mozziconi
 def xcollcig():
-    collision = pygame.sprite.spritecollide(player, cigar,
-                                            False)  # cerco le spara che hanno una collisione col mio sprite
+    collision=pygame.sprite.spritecollide(player, cigar, False)  #cerco le spara che hanno una collisione col mio sprite
     for block in collision:
-        if player.move_x > 0 or player.move_x < 0:
-            # global cont
-            # cont=cont+100
-            # screen.fill=BLACK
-            if cont < 200:
-                todraw.remove(player)
-                text()
-                exit()
+        if player.move_x>0 or player.move_x<0:
+            #global cont
+            #cont=cont+100
+            #screen.fill=BLACK
+            if cont<500:
+                game=GameOver(over)
 
 
 # collisioni con il nemico
-def xcollRubbish():
-    collision = pygame.sprite.spritecollide(player, rub,
-                                            False)  # cerco le rubbish che hanno una collisione col mio sprite
+def xcollenemy():
+    collision=pygame.sprite.spritecollide(player, nemic, False)  #cerco le plats che hanno una collisione col mio sprite
     for block in collision:
-        if player.move_x > 0 or player.move_x < 0:
-            global cont
-            cont = cont + 100
-            rub.remove(block)
+        if player.move_x>0 or player.move_x<0:
+            nemic.remove(nemico)
+            #text()
+            rub.remove()
+            #todraw.remove(player)
+            #cigar.remove(spara)
+            #ground.remove(i)
+            game=GameOver(win)
 
 
 # Costruzione del gioco
@@ -406,8 +384,6 @@ def build():
 def gravity():
     if not player.onground:
         player.move_y += 1
-
-
 contPunteggio = Box(box)
 player = Player(man)
 nemico = Nemico(enemy)
@@ -426,7 +402,7 @@ while True:
     # text()
     # Ciclo eventi
     for event in pygame.event.get():
-        if event.type == QUIT:  # Uscita
+        if event.type == pygame.QUIT:  # Uscita
             pygame.quit()
             exit()
         if event.type == KEYDOWN:  # Viene premuto un tasto
@@ -461,6 +437,7 @@ while True:
     ground.update()
     cigar.update()
     nemic.update()
+    game.update()
     pygame.display.update()
 
     # Faccio in modo che il gioco non vada oltre i 40FPS
